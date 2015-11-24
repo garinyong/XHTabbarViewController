@@ -24,7 +24,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:[ViewController1 new]];
-//    nav1.navigationBar.hidden = YES;
     UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:[ViewController2 new]];
     UINavigationController *nav3 = [[UINavigationController alloc] initWithRootViewController:[ViewController3 new]];
     
