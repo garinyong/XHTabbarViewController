@@ -1,12 +1,14 @@
 # XHTabbarViewController
-继承自UIViewController的，自定义TabbarViewController，支持tabbar高度 tabbar形状自定义，使用方法比较简单，在子类实现指定方法，解决系统tabbar隐藏困难，可定制性差的问题。
+继承自UIViewController的，自定义TabbarViewController，支持tabbar高度自定义，使用方法较简单，在子类实现指定方法，解决系统tabbar隐藏困难，可定制性差的问题。
 
 使用方法：
 DemoTabbar : XHTabbar
-重写XHTabbar 的 -(void) createUI 方法
+重写XHTabbar
+-(void) createUI 方法
 
 DemoTabbarViewController : XHTabbarViewController
-重写XHTabbarViewController 的 -(void) makeTabbar 方法
+重写XHTabbarViewController
+-(void) makeTabbar 方法
 
 调用：
 
