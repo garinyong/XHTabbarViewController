@@ -12,7 +12,7 @@ s.source           = { :git => "https://github.com/garinyong/XHTabbarViewControl
 s.platform     = :ios, '6.0'
 s.requires_arc = true
 
-s.source_files = 'XHTabbarViewControllerDemo/*'
+s.source_files = 'XHTabbarViewControllerDemo/XHTabbarViewController/*'
 # s.resources = 'Assets'
 
 # s.ios.exclude_files = 'Classes/osx'
