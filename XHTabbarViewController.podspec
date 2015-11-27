@@ -1,8 +1,8 @@
 Pod::Spec.new do |s|
 s.name             = "XHTabbarViewController"
 s.version          = "1.0.0"
-s.summary          = "Custom tabbarviewcontroller, you can change the tabbar height, hide or show tabbar"
-s.description      = <<-DESC
+s.summary          = "Custom tabbarviewcontroller"
+s.description      = "Custom tabbarviewcontroller, you can change the tabbar height, hide or show tabbar"<<-DESC
 It is custom tabbarviewcontroller used on iOS, which implement by Objective-C.
 DESC
 s.homepage         = "https://github.com/garinyong/XHTabbarViewController"
