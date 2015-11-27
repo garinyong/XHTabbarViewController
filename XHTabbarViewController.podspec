@@ -7,7 +7,7 @@ s.author           = { "高勇" => "garinspring@163.com" }
 s.source           = { :git => "https://github.com/garinyong/XHTabbarViewController.git", :tag => "1.0.0" }
 s.platform     = :ios, '6.0'
 s.requires_arc = true
-s.license          = 'MIT'
+s.license = { :type => 'MIT', :file => 'LICENSE.md' }
 s.source_files = 'XHTabbarViewControllerDemo/XHTabbarViewController/*'
 # s.resources = 'Assets'
 
