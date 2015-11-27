@@ -9,7 +9,7 @@ s.homepage         = "https://github.com/garinyong/XHTabbarViewController"
 # s.screenshots      = "www.example.com/screenshots_1", "www.example.com/screenshots_2"
 s.license          = 'MIT'
 s.author           = { "高勇" => "garinspring@163.com" }
-s.source           = { :git => "https://github.com/garinyong/XHTabbarViewController.git", :tag => s.version.to_s }
+s.source           = { :git => "https://github.com/garinyong/XHTabbarViewController.git", :tag => "1.0.0" }
 # s.social_media_url = 'http://www.weibo.com/u/2129091951'
 
 s.platform     = :ios, '6.0'
