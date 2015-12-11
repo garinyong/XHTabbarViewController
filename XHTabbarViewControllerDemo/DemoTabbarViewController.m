@@ -19,6 +19,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    self.transitionDuraiton = 0.2;
+    self.tAnimationBlcok = ^(UIViewController *fromVC,UIViewController *toVC)
+    {
+        fromVC.view.alpha = 0;
+        toVC.view.alpha = 1;
+    };
 }
 
 - (void)didReceiveMemoryWarning {
