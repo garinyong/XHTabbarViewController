@@ -8,8 +8,6 @@
 #import <UIKit/UIKit.h>
 #import "XHTabbar.h"
 
-#define tabbarHeight 49
-
 typedef void(^transitionBlock)(UIViewController *fromVC,UIViewController *toVC);
 
 @interface XHTabbarViewController : UIViewController
@@ -25,10 +23,13 @@ typedef void(^transitionBlock)(UIViewController *fromVC,UIViewController *toVC);
 @property(nonatomic) NSUInteger selectedIndex;
 
 @property(nonatomic,copy) transitionBlock tAnimationBlcok;  //切换tab动画block
-@property (nonatomic) NSTimeInterval transitionDuraiton;              //切换动画执行时间
 
 - (id) initWithViewController:(NSArray *) viewControllers;
 
+-(void) tAnimationBlockCompliated:(UIViewController *) fromController toController:(UIViewController *) toController;
+
 - (void)setViewControllers:(NSArray *) newViewControllers;
+
+- (NSArray *) getCurViewControllers;
 
 @end

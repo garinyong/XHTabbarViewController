@@ -10,15 +10,20 @@
 
 typedef void(^tabbarItemButtonSelect)(NSInteger selectIndex);
 
+typedef BOOL(^couldSelectTabItem)(UIButton *newSelectBtn);
+
 @interface XHTabbar : UIView
 {
     NSMutableArray *curItemBtns;
     NSArray *barItemDataList;
     tabbarItemButtonSelect selectBtnClick;
+    couldSelectTabItem beforeSelectBtnClick;
 }
 
--(instancetype) initWithBar:(CGFloat) barHeight barItemData:(NSArray *) barItemData selectBtnClickBlock:(tabbarItemButtonSelect) selectBtnClickBlock;
+-(instancetype) initWithBar:(CGFloat) barHeight barItemData:(NSArray *) barItemData beforeSelectBtnClickBlock:(couldSelectTabItem) beforeSelectBtnClickBlock selectBtnClickBlock:(tabbarItemButtonSelect) selectBtnClickBlock;
 
 -(void) itemClick:(UIButton *) btn;
+
+-(void) changeUI:(NSInteger) newSelectIndex;
 
 @end

@@ -10,7 +10,7 @@
 
 @interface XHTabbarViewController ()
 {
-
+    
 }
 @end
 
@@ -21,12 +21,6 @@
     if (self = [super init])
     {
         curViewControllsers = viewControllers;
-        
-        if (curViewControllsers.count > 0)
-        {
-            self.selectedIndex = 0;
-            self.selectedViewController = [curViewControllsers firstObject];
-        }
     }
     
     return self;
@@ -43,10 +37,12 @@
     [self makeTabbar];
     [self.view addSubview:self.tabbar];
     
-    self.selectedIndex = 0;
+    _selectedIndex = 0;
+    self.selectedViewController = [curViewControllsers objectAtIndex:_selectedIndex];
     [self addChildViewController:self.selectedViewController];
     [self.view insertSubview:self.selectedViewController.view belowSubview:self.tabbar];
     [self.selectedViewController didMoveToParentViewController:self];
+    [self.tabbar changeUI:0];
 }
 
 /**
@@ -55,60 +51,61 @@
 -(void) makeTabbar
 {
     /*
-    NSArray *tabbarItmeList = @[
-                                [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected1" normalImageUrl:@"itemNormal1"],
-                                [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected2" normalImageUrl:@"itemNormal2"],
-                                [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected3" normalImageUrl:@"itemNormal3"]
-                                ];
-    __weak XHTabbarViewController *weekSelf = self;
-    self.tabbar = [[XHTabbar alloc] initWithBar:tabbarHeight barItemData:tabbarItmeList selectBtnClickBlock:^(NSInteger selectIndex) {
-        weekSelf.selectedIndex = selectIndex;
-    }];
-    */
+     NSArray *tabbarItmeList = @[
+     [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected1" normalImageUrl:@"itemNormal1"],
+     [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected2" normalImageUrl:@"itemNormal2"],
+     [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected3" normalImageUrl:@"itemNormal3"]
+     ];
+     __weak XHTabbarViewController *weekSelf = self;
+     self.tabbar = [[XHTabbar alloc] initWithBar:tabbarHeight barItemData:tabbarItmeList selectBtnClickBlock:^(NSInteger selectIndex) {
+     weekSelf.selectedIndex = selectIndex;
+     }];
+     */
 }
 
 //选中某个索引
 -(void) setSelectedIndex:(NSUInteger) newSelectIndex
 {
-    if (newSelectIndex == _selectedIndex) {
-        return;
-    }
-    
-    UIViewController *fromController = self.selectedViewController;
-    UIViewController *toController = [curViewControllsers objectAtIndex:newSelectIndex];
-    
-    //    toController.view.frame = fromController.view.bounds;
-    [self addChildViewController:toController];
-    [fromController willMoveToParentViewController:nil];
-    
-    if (_transitionDuraiton > 0 && self.tAnimationBlcok)
+    @synchronized(self)
     {
-        [self.view insertSubview:toController.view belowSubview:fromController.view];
+        if (newSelectIndex == _selectedIndex)
+        {
+            return;
+        }
         
-        [UIView animateWithDuration:_transitionDuraiton animations:^{
+        UIViewController *fromController = self.selectedViewController;
+        UIViewController *toController = [curViewControllsers objectAtIndex:newSelectIndex];
+        
+        //    toController.view.frame = fromController.view.bounds;
+        [self addChildViewController:toController];
+        [fromController willMoveToParentViewController:nil];
+        
+        //有动画
+        if (self.tAnimationBlcok)
+        {
+            [self.view insertSubview:toController.view belowSubview:fromController.view];
             
             self.tAnimationBlcok(fromController,toController);
-            
-        }completion:^(BOOL finished)
-         {
-             [toController didMoveToParentViewController:self];
-             [fromController removeFromParentViewController];
-             [fromController.view removeFromSuperview];
-             
-             self.selectedViewController = toController;
-             _selectedIndex = newSelectIndex;
-         }];
-    }
-    else
-    {
-        [toController didMoveToParentViewController:self];
-        [self.view insertSubview:toController.view belowSubview:self.tabbar];
-        [fromController removeFromParentViewController];
-        [fromController.view removeFromSuperview];
+        }
+        else
+        {
+            [toController didMoveToParentViewController:self];
+            [self.view insertSubview:toController.view belowSubview:self.tabbar];
+            [fromController removeFromParentViewController];
+            [fromController.view removeFromSuperview];
+        }
         
         self.selectedViewController = toController;
         _selectedIndex = newSelectIndex;
     }
+}
+
+//如果有切换动画，须在动画完成的时候调用此方法完成后续
+-(void) tAnimationBlockCompliated:(UIViewController *) fromController toController:(UIViewController *) toController
+{
+    [toController didMoveToParentViewController:self];
+    [fromController removeFromParentViewController];
+    [fromController.view removeFromSuperview];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -132,14 +129,19 @@
     
     if (curViewControllsers.count > 0)
     {
-        self.selectedViewController = [curViewControllsers firstObject];
+        self.selectedViewController = [curViewControllsers objectAtIndex:_selectedIndex];
     }
     
-    self.selectedIndex = 0;
+    self.selectedViewController = [curViewControllsers objectAtIndex:_selectedIndex];
     [self addChildViewController:self.selectedViewController];
     [self.view insertSubview:self.selectedViewController.view belowSubview:self.tabbar];
     [self.selectedViewController didMoveToParentViewController:self];
+    [self.tabbar changeUI:_selectedIndex];
 }
 
+- (NSArray *) getCurViewControllers
+{
+    return curViewControllsers;
+}
 
 @end

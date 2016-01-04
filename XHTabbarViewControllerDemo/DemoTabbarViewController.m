@@ -20,11 +20,26 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    self.transitionDuraiton = 0.2;
+    __weak XHTabbarViewController *weakSelf = self;
+    //自定义切换动画，发挥想象力吧
     self.tAnimationBlcok = ^(UIViewController *fromVC,UIViewController *toVC)
     {
-        fromVC.view.alpha = 0;
-        toVC.view.alpha = 1;
+        toVC.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        toVC.view.alpha = 0;
+        [UIView animateWithDuration:0.35 animations:^{
+            
+            fromVC.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+            toVC.view.transform = CGAffineTransformMakeScale(1, 1);
+            fromVC.view.alpha = 0;
+            toVC.view.alpha = 1;
+            
+        }completion:^(BOOL finished)
+         {
+             //动画完成，需要掉用此方法，完成后续
+             [weakSelf tAnimationBlockCompliated:fromVC toController:toVC];
+             fromVC.view.transform = CGAffineTransformMakeScale(1, 1);
+         }];
+
     };
 }
 
@@ -43,8 +58,13 @@
                                 [[XHTabbarItem alloc] initWithSelectedImageUrl:@"itemSelected3" normalImageUrl:@"itemNormal3"]
                                 ];
     __weak XHTabbarViewController *weekSelf = self;
-    self.tabbar = [[DemoTabbar alloc] initWithBar:tabbarHeight barItemData:tabbarItmeList selectBtnClickBlock:^(NSInteger selectIndex) {
+    self.tabbar = [[DemoTabbar alloc] initWithBar:49 barItemData:tabbarItmeList beforeSelectBtnClickBlock:^BOOL(UIButton *newSelectBtn) {
+        //是否可以选某个tab，可以做在此做一些事情
+        return YES;
+    } selectBtnClickBlock:^(NSInteger selectIndex) {
+        
         weekSelf.selectedIndex = selectIndex;
+        
     }];
 }
 
