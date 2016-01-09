@@ -10,7 +10,7 @@
 
 @interface XHTabbarViewController ()
 {
-    
+    BOOL isAnimating;
 }
 @end
 
@@ -21,6 +21,7 @@
     if (self = [super init])
     {
         curViewControllsers = viewControllers;
+        isAnimating = NO;
     }
     
     return self;
@@ -66,6 +67,11 @@
 //选中某个索引
 -(void) setSelectedIndex:(NSUInteger) newSelectIndex
 {
+    if (isAnimating)
+    {
+        return;
+    }
+    
     @synchronized(self)
     {
         if (newSelectIndex == _selectedIndex)
@@ -83,6 +89,7 @@
         //有动画
         if (self.tAnimationBlcok)
         {
+            isAnimating = YES;
             [self.view insertSubview:toController.view belowSubview:fromController.view];
             
             self.tAnimationBlcok(fromController,toController);
@@ -100,12 +107,19 @@
     }
 }
 
-//如果有切换动画，须在动画完成的时候调用此方法完成后续
+/**
+ *  如果有切换动画，须在动画完成的时候调用此方法完成后续
+ *
+ *  @param fromController
+ *  @param toController
+ */
 -(void) tAnimationBlockCompliated:(UIViewController *) fromController toController:(UIViewController *) toController
 {
     [toController didMoveToParentViewController:self];
     [fromController removeFromParentViewController];
     [fromController.view removeFromSuperview];
+    
+    isAnimating = NO;
 }
 
 - (void)didReceiveMemoryWarning {
