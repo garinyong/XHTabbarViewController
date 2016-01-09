@@ -27,9 +27,23 @@ XHTabbarViewController 的tabbar.hidden = NO; //or YES
 
 自定义tab切换动画：在DemoTabbarViewController中加入以下block
 
-    self.transitionDuraiton = 0.2;   //切换动画时间
-    self.tAnimationBlcok = ^(UIViewController *fromVC,UIViewController *toVC)  //定制动画block
+    __weak XHTabbarViewController *weakSelf = self;
+    //自定义切换动画，发挥想象力吧
+    self.tAnimationBlcok = ^(UIViewController *fromVC,UIViewController *toVC)
     {
-        fromVC.view.alpha = 0;
-        toVC.view.alpha = 1;
-    };
+        toVC.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+        toVC.view.alpha = 0;
+        [UIView animateWithDuration:0.35 animations:^{
+            
+            fromVC.view.transform = CGAffineTransformMakeScale(0.1, 0.1);
+            toVC.view.transform = CGAffineTransformMakeScale(1, 1);
+            fromVC.view.alpha = 0;
+            toVC.view.alpha = 1;
+            
+        }completion:^(BOOL finished)
+         {
+             //动画完成，需要掉用此方法，完成后续
+             [weakSelf tAnimationBlockCompliated:fromVC toController:toVC];
+             fromVC.view.transform = CGAffineTransformMakeScale(1, 1);
+         }];
+    ｝
