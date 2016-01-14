@@ -1,6 +1,7 @@
 # XHTabbarViewController
 继承自UIViewController自定义TabbarViewController，支持tabbar高度自定义，使用方法较简单，在子类实现指定方法，解决系统tabbar隐藏困难，可定制性差的问题。
 
+兼容性：
 Minimum iOS Target : iOS 6
 
 使用方法：
@@ -8,6 +9,7 @@ Installation with CocoaPods
 
 pod 'XHTabbarViewController', '~> 1.0.2'
 
+代码调用：
 DemoTabbar : XHTabbar
 重写XHTabbar
 -(void) createUI 方法
@@ -15,8 +17,6 @@ DemoTabbar : XHTabbar
 DemoTabbarViewController : XHTabbarViewController
 重写XHTabbarViewController
 -(void) makeTabbar 方法
-
-调用：
 
     UINavigationController *nav1 = [[UINavigationController alloc] initWithRootViewController:[ViewController1 new]];
     UINavigationController *nav2 = [[UINavigationController alloc] initWithRootViewController:[ViewController2 new]];
