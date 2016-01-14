@@ -2,7 +2,7 @@
 //  XHTabbarViewController.h
 //
 //  Created by GaoYong on 15/11/23.
-//  Copyright (c) 2015年 dangdang. All rights reserved.
+//  Copyright (c) 2015年 gaoyong. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
