@@ -70,4 +70,22 @@
         }
     }
 }
+
+//选中新的tab，程序触发
+-(void) selectNewTabItemWithIndex:(NSInteger) newSelectIndex
+{
+    if (newSelectIndex < 0 || newSelectIndex >= curItemBtns.count)
+    {
+        return;
+    }
+    
+    UIButton *temSelectBtn = [curItemBtns objectAtIndex:newSelectIndex];
+    
+    if (!temSelectBtn)
+    {
+        return;
+    }
+    
+    [self itemClick:temSelectBtn];
+}
 @end

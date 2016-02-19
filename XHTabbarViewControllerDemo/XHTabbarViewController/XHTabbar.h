@@ -26,4 +26,6 @@ typedef BOOL(^couldSelectTabItem)(UIButton *newSelectBtn);
 
 -(void) changeUI:(NSInteger) newSelectIndex;
 
+-(void) selectNewTabItemWithIndex:(NSInteger) newSelectIndex;
+
 @end
