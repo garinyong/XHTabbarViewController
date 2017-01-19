@@ -15,7 +15,7 @@
 
 @implementation XHTabbar
 
--(instancetype) initWithBar:(CGFloat) barHeight barItemData:(NSArray *) barItemData selectBtnClickBlock:(tabbarItemButtonSelect) selectBtnClickBlock
+-(instancetype) initWithBar:(CGFloat) barHeight barItemData:(NSArray *) barItemData beforeSelectBtnClickBlock:(couldSelectTabItem) beforeSelectBtnClickBlock selectBtnClickBlock:(tabbarItemButtonSelect) selectBtnClickBlock
 {
     CGRect frame = CGRectMake(0, [UIScreen mainScreen].bounds.size.height - barHeight, [UIScreen mainScreen].bounds.size.width , barHeight);
     if (self = [super initWithFrame:frame])
@@ -23,6 +23,7 @@
         curItemBtns = [NSMutableArray array];
         barItemDataList = barItemData;
         selectBtnClick = selectBtnClickBlock;
+        beforeSelectBtnClick = beforeSelectBtnClickBlock;
         
         [self createUI];
     }
@@ -40,6 +41,11 @@
 
 -(void) itemClick:(UIButton *) btn
 {
+    if(beforeSelectBtnClick && !beforeSelectBtnClick(btn))
+    {
+        return;
+    }
+    
     if (selectBtnClick)
     {
         [self changeUI:btn.tag];
@@ -65,4 +71,21 @@
     }
 }
 
+//选中新的tab，程序触发
+-(void) selectNewTabItemWithIndex:(NSInteger) newSelectIndex
+{
+    if (newSelectIndex < 0 || newSelectIndex >= curItemBtns.count)
+    {
+        return;
+    }
+    
+    UIButton *temSelectBtn = [curItemBtns objectAtIndex:newSelectIndex];
+    
+    if (!temSelectBtn)
+    {
+        return;
+    }
+    
+    [self itemClick:temSelectBtn];
+}
 @end
