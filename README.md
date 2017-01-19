@@ -7,7 +7,7 @@ Minimum iOS Target : iOS 6
 使用方法：
 Installation with CocoaPods
 
-pod 'XHTabbarViewController', '~> 1.0.2'
+pod 'XHTabbarViewController', '~> 1.0.6'
 
 代码调用：
 DemoTabbar : XHTabbar
